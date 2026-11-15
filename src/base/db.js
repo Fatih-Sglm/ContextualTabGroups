@@ -79,10 +79,12 @@ const domainsOfGroup = async (groupname) => {
   return req(db.transaction(DOMAINS).objectStore(DOMAINS).index("groupname").getAll(groupname));
 };
 
-// Exact hostname first, then parent suffixes: "a.b.example.com" -> "b.example.com" -> "example.com" -> "com"
+// Exact hostname first, then parent suffixes: "a.b.example.com" -> "b.example.com" -> "example.com".
+// A one-label suffix ("com") is never tried, so a legacy one-label record cannot capture a whole TLD;
+// a one-label hostname ("localhost") still matches itself exactly.
 export async function getConfForHostname(hostname) {
   const parts = hostname.split(".");
-  for (let i = 0; i < parts.length; i++) {
+  for (let i = 0; i < Math.max(1, parts.length - 1); i++) {
     const conf = await get(DOMAINS, parts.slice(i).join("."));
     if (conf) return conf;
   }

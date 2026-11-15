@@ -14,6 +14,8 @@ const seed = [
   { hostname: "bad.com", groupname: "Bad", color: "<script>" },
   { hostname: "legacy.com", groupname: "Mixed" },
   { hostname: "mixed.com", groupname: "Mixed", color: "green" },
+  { hostname: "com", groupname: "Everything", color: "red" }, // legacy one-label record
+  { hostname: "localhost", groupname: "Local", color: "cyan" },
 ];
 const state = { version: 3, deleted: false, stores: { GrpNameConf: { keyPath: "hostname", data: new Map(seed.map((r) => [r.hostname, r])) } } };
 const clone = (v) => (v === undefined ? v : structuredClone(v));
@@ -139,7 +141,7 @@ const D = state.stores.GrpNameConf.data, G = state.stores.Groups.data;
 assert.equal(state.deleted, false, "upgrade must not delete stores");
 assert.equal(state.version, 4);
 assert.equal(D.size, seed.length, "no domain lost");
-assert.deepEqual(Object.fromEntries([...G].map(([k, v]) => [k, v.color])), { Dev: "yellow", Old: "", Bad: "", Mixed: "green" });
+assert.deepEqual(Object.fromEntries([...G].map(([k, v]) => [k, v.color])), { Dev: "yellow", Old: "", Bad: "", Mixed: "green", Everything: "red", Local: "cyan" });
 assert.equal("color" in D.get("github.com"), false, "same-as-group color becomes inherited");
 assert.equal(D.get("bitbucket.org").color, "blue", "different color kept as override");
 assert.equal("color" in D.get("bad.com"), false, "invalid color dropped");
@@ -157,7 +159,11 @@ addTab(6, {}); navigate(6, "https://bad.com/");
 addTab(7, { pinned: true }); navigate(7, "https://github.com/");
 addTab(8, { windowId: 2 }); navigate(8, "https://github.com/");
 await settle();
-for (const id of [5, 6, 7, 8]) assert.equal(tabs.get(id).groupId, -1, `tab ${id} must stay ungrouped`);
+addTab(13, {}); navigate(13, "https://example.com/"); // only the legacy "com" record could match
+await settle();
+for (const id of [5, 6, 7, 8, 13]) assert.equal(tabs.get(id).groupId, -1, `tab ${id} must stay ungrouped`);
+addTab(14, {}); navigate(14, "http://localhost:3000/"); await settle();
+assert.equal(groupOf(14)?.title, "Local", "one-label hostname still matches itself exactly");
 
 // --- tab strip locked by a drag: the rule is retried, not dropped ---
 dragLocks = 3;
