@@ -1,5 +1,11 @@
-# Contextual Tab Groups [<img align="right" src="https://github.com/user-attachments/assets/013973c7-f0ee-4706-986d-e7e3993fc8d6">](https://chromewebstore.google.com/detail/tab-islands-for-chrome/bnkppmpbnnedcfoncmkbekokhmfkhoin) [<img align="right" width="172" height="60" alt="image" src="https://github.com/user-attachments/assets/7c7aee63-2936-40a0-ba08-13fe79c1b92a" />](https://addons.mozilla.org/en-US/firefox/addon/tab-groups/)
+# Contextual Tab Groups
 
+
+**Forked from [SpookyKipper/ContextualTabGroups](https://github.com/SpookyKipper/ContextualTabGroups)**, the original extension by Spooky Kipper. The original idea, design and code come from that project; this fork builds on top of them.
+
+> **Modified fork.** This repository is a modified version of the original above, distributed under the same license (GPL-3.0, see [LICENSE](LICENSE)).
+> Modified on 2026-11-15: security cleanup (no npm dependencies, developer default entries removed, CSP, search-query group names off by default), group-based domain rules with colors, Turkish UI, redesigned options page, tests and a packaging workflow.
+> This fork is not published in any extension store; the original extension's store listings do not contain these changes. Install it from this repository (see [Installation](#installation)).
 
 ### Group tabs by context for you automatically. Inspired by Opera One.
 
@@ -14,7 +20,10 @@ Features:<br>
 
 ---
 ## Installation
-Get the extension from the [Chrome Web Store](https://chromewebstore.google.com/detail/tab-islands-for-chrome/bnkppmpbnnedcfoncmkbekokhmfkhoin) or [Microsoft Edge Addons](https://microsoftedge.microsoft.com/addons/detail/tab-islands-for-edge/cmbiocblmmeggepnbhnngjnjkmignimb) or [Naver Whale Store](https://store.whale.naver.com/detail/pkmlodmdlnaglamodmnfhjcicbihgaic) or [Firefox Browser Add-ons](https://addons.mozilla.org/en-US/firefox/addon/tab-groups/)
+This fork is distributed only through this repository:
+1. Download the zip for your browser (`chrome`, `edge` or `firefox`) from this repository's **Releases**, or build it yourself (see [Building](#building)), and unzip it.
+2. Chrome / Edge / other Chromium browsers: open `chrome://extensions` (`edge://extensions`), enable **Developer mode**, click **Load unpacked** and pick the unzipped folder.
+3. Firefox: open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on** and pick `manifest.json` (temporary until the browser restarts; unsigned add-ons cannot be installed permanently).
 
 ---
 ## ✅ Fully Supported Browsers
@@ -126,4 +135,5 @@ Supported browsers are `chrome`, `firefox`, `edge`<br>
 Any other chromium-based browsers not listed here should also use `chrome` when building.
 
 ## Credits
+Original extension: [Contextual Tab Groups](https://github.com/SpookyKipper/ContextualTabGroups) by Spooky Kipper (GPL-3.0). This fork keeps that license.<br>
 Extension Idea: [Opera One Tab Islands](https://www.opera.com/features/tab-islands)

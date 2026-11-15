@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "1.7.3",
+  "version": "1.8.0",
   "default_locale": "en",
   "action": {
     "default_popup": "popup.html",
